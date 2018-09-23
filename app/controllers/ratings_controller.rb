@@ -9,9 +9,14 @@ class RatingsController < ApplicationController
   end
 
   def create
-    Rating.create params.require(:rating).permit(:score, :beer_id)
-    redirect_to ratings_path
-  end
+  # otetaan luotu reittaus muuttujaan
+  rating = Rating.create params.require(:rating).permit(:score, :beer_id)
+
+  # talletetaan tehty reittaus sessioon
+  session[:last_rating] = "#{rating.beer.name} #{rating.score} points"
+
+  redirect_to ratings_path
+end
 
   def destroy
     rating = Rating.find(params[:id])

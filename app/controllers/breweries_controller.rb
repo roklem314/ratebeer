@@ -73,6 +73,7 @@ class BreweriesController < ApplicationController
       params.require(:brewery).permit(:name, :year)
     end
 end
+
 private
 
   def authenticate
@@ -80,11 +81,12 @@ private
       if username == "admin" and password == "secret"
         login_ok = true
       else
-        login_ok = false  # käyttäjätunnus/salasana oli väärä
+        login_ok = false
+
+        # käyttäjätunnus/salasana oli väärä
       end
 
       # koodilohkon arvo on sen viimeisen komennon arvo eli true/false riippuen kirjautumisen onnistumisesta
-      login_ok
+      #login_ok
     end
   end
-end

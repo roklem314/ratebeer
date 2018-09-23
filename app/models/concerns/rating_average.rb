@@ -1,7 +1,7 @@
 module RatingAverage
-    extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-    def average_rating
-        return ratings.average(:score).to_s
-    end
+  def average_rating
+    ratings.average(:score).to_s
+  end
 end
