@@ -7,10 +7,15 @@ class SessionsController < ApplicationController
     # haetaan usernamea vastaava käyttäjä tietokannasta
     user = User.find_by username: params[:username]
     # talletetaan sessioon kirjautuneen käyttäjän id (jos käyttäjä on olemassa)
-    session[:user_id] = user.id if user
+    if user && user.authenticate(params[:password])
+    session[:user_id] = user.id
+    redirect_to user_path(user), notice: "Welcome back!"
     # uudelleen ohjataan käyttäjä omalle sivulleen
-    redirect_to users_path
+    else
+      redirect_to signin_path, notice: "Username and/or password mismatch"
+    end
   end
+
 
   def destroy
     # nollataan sessio

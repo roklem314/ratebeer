@@ -1,6 +1,7 @@
 class BreweriesController < ApplicationController
+  before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:destroy]
+
 
   # GET /breweries
   # GET /breweries.json
@@ -25,18 +26,20 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
-    @brewery = Brewery.new(brewery_params)
+  @beer = Beer.new(beer_params)
 
-    respond_to do |format|
-      if @brewery.save
-        format.html { redirect_to @brewery, notice: 'Brewery was successfully created.' }
-        format.json { render :show, status: :created, location: @brewery }
-      else
-        format.html { render :new }
-        format.json { render json: @brewery.errors, status: :unprocessable_entity }
-      end
+  respond_to do |format|
+    if @beer.save
+      format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
+      format.json { render :show, status: :created, location: @beer }
+    else
+      @breweries = Brewery.all
+      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+      format.html { render :new }
+      format.json { render json: @beer.errors, status: :unprocessable_entity }
     end
   end
+end
 
   # PATCH/PUT /breweries/1
   # PATCH/PUT /breweries/1.json
@@ -73,20 +76,3 @@ class BreweriesController < ApplicationController
       params.require(:brewery).permit(:name, :year)
     end
 end
-
-private
-
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      if username == "admin" and password == "secret"
-        login_ok = true
-      else
-        login_ok = false
-
-        # käyttäjätunnus/salasana oli väärä
-      end
-
-      # koodilohkon arvo on sen viimeisen komennon arvo eli true/false riippuen kirjautumisen onnistumisesta
-      #login_ok
-    end
-  end
