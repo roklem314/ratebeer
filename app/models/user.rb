@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def to_s
     "#{username}"
   end
+  def favorite_beer
+    return nil if ratings.empty?
+    ratings.order(score: :desc).limit(1).first.beer
+  end
 end
