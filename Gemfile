@@ -7,6 +7,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.1'
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.8'
   gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
