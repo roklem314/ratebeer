@@ -1,7 +1,4 @@
 class BeerClub < ApplicationRecord
-  has_many :members, -> { distinct }, through: :membership, source: :user
-
-  def to_s
-    "#{name}"
-  end
+  has_many :memberships
+  has_many :members, through: :memberships, source: :user
 end

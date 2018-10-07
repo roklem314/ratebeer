@@ -1,4 +1,7 @@
 FactoryBot.define do
+  factory :place do
+    
+  end
   factory :user do
     username { "Pekka" }
     password { "Foobar1" }
@@ -13,12 +16,10 @@ FactoryBot.define do
   factory :beer do
     name { "anonymous" }
     style { "Lager" }
-    brewery # olueeseen liittyvä panimo luodaan brewery-tehtaalla
+    brewery
   end
 
   factory :rating do
-    score { 10 }
-    beer # reittaukseen liittyvä olut luodaan beer-tehtaalla
-    user # reittaukseen liittyvä user luodaan user-tehtaalla
+    beer
   end
 end

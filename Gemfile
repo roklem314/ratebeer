@@ -20,6 +20,9 @@ group :production do
    gem 'rails_12factor'
 end
 
+# HTTP requests with HTTParty
+gem 'httparty'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -64,11 +67,17 @@ group :development do
 end
 
 group :test do
+  # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'chromedriver-helper'
+  group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  gem 'factory_bot_rails'
+  gem 'launchy'
+end
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

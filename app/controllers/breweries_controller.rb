@@ -1,7 +1,6 @@
 class BreweriesController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-
+  before_action :ensure_that_signed_in, except: [:index, :show]
 
   # GET /breweries
   # GET /breweries.json
@@ -26,20 +25,18 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
-  @beer = Beer.new(beer_params)
+    @brewery = Brewery.new(brewery_params)
 
-  respond_to do |format|
-    if @beer.save
-      format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
-      format.json { render :show, status: :created, location: @beer }
-    else
-      @breweries = Brewery.all
-      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
-      format.html { render :new }
-      format.json { render json: @beer.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if @brewery.save
+        format.html { redirect_to @brewery, notice: 'Brewery was successfully created.' }
+        format.json { render :show, status: :created, location: @brewery }
+      else
+        format.html { render :new }
+        format.json { render json: @brewery.errors, status: :unprocessable_entity }
+      end
     end
   end
-end
 
   # PATCH/PUT /breweries/1
   # PATCH/PUT /breweries/1.json
@@ -66,13 +63,14 @@ end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_brewery
-      @brewery = Brewery.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def brewery_params
-      params.require(:brewery).permit(:name, :year)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_brewery
+    @brewery = Brewery.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def brewery_params
+    params.require(:brewery).permit(:name, :year)
+  end
 end

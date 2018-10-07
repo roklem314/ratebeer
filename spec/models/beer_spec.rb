@@ -1,24 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
-  it "saved with a name, style and a brewery" do
-    brewery = Brewery.create name:"test", year:1942
-    beer = Beer.create name:"testbeer", style:"Weizen", brewery:brewery
+  let(:brewery) { Brewery.create name: 'crapbrau', year: 1900 }
 
+  it "is created with valid input" do
+    beer = Beer.create name: 'crap', style: 'lager', brewery: brewery
     expect(beer).to be_valid
     expect(Beer.count).to eq(1)
   end
-    it "not saved without a name" do
-    brewery = Brewery.create name:"test", year:1942
-    beer = Beer.create style:"Weizen", brewery:brewery
+
+  it "is not saved without name" do
+    beer = Beer.create style: 'lager', brewery: brewery
 
     expect(beer).not_to be_valid
     expect(Beer.count).to eq(0)
   end
 
-  it "not saved without a style" do
-    brewery = Brewery.create name:"testbrewery", year:1942
-    beer = Beer.create name:"testbeer", brewery:brewery
+  it "is not saved without style" do
+    beer = Beer.create name: 'crap', brewery: brewery
 
     expect(beer).not_to be_valid
     expect(Beer.count).to eq(0)
