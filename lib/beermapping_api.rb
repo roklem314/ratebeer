@@ -1,4 +1,5 @@
-def self.places_in(city)
+class BeermappingApi
+  def self.places_in(city)
     city = city.downcase
 
     places = Rails.cache.read(city)
@@ -23,7 +24,9 @@ def self.places_in(city)
     end
   end
 
+
   def self.key
-    "10552691a3991f5562890972947a623e"
+    raise "BEERMAPPING_APIKEY env variable not defined" if ENV['BEERMAPPING_APIKEY'].nil?
+    ENV['BEERMAPPING_APIKEY']
   end
 end
